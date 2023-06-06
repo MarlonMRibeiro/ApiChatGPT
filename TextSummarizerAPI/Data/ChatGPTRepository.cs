@@ -10,16 +10,31 @@ namespace TextSummarizerAPI.Data
         private readonly string url;
         public ChatGPTRepository()
         {
-            url = "";
+            url = "https://api.openai.com/v1/chat/completions";
         }
 
-        public ChatGPTResponseViewModel PostText(string content, string role = null)
+        public ChatGPTResponseViewModel PostText(string role, string content)
         {
             using (var request = new HttpClient())
             {
                 request.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "");
 
-                HttpResponseMessage response = request.GetAsync(url).Result;
+                var body = new ChatGPTViewModel()
+                {
+                    model = "",
+                    messages = new List<Message>() 
+                    { 
+                        new Message() 
+                        {
+                            content = content, 
+                            role= role
+                        }
+                    }
+                };
+
+                HttpContent httpcontent = JsonContent.Create(body);
+
+                HttpResponseMessage response = request.PostAsync(url, httpcontent).Result;
 
                 if (!response.IsSuccessStatusCode)
                     throw new Exception();

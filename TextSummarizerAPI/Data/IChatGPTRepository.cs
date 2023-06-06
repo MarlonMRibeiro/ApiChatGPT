@@ -4,6 +4,6 @@ namespace TextSummarizerAPI.Data
 {
     public interface IChatGPTRepository
     {
-        ChatGPTResponseViewModel PostText(string content, string role = null);
+        ChatGPTResponseViewModel PostText(string role, string content);
     }
 }
