@@ -1,0 +1,53 @@
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<style>
+  textarea {
+  border: none;
+  background-color: transparent;
+  resize: none !important;
+  outline: none;
+}
+</style>
+<html>
+<head>
+  <title>Tela de Texto</title>
+  <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+</head>
+<body style="overflow: hidden;">
+  <div id="app" style="overflow: hidden;">
+    <div style="background-color: rgb(59, 183, 255); width: 100%; height: 300px; margin-bottom: -170px;"></div>
+    <div style="display: flex; text-align: center; justify-content: space-between; margin: 0px 20%;">
+      <div style="border:rgb(143, 143, 143) solid 1px; width: 500px; border-radius: 15px ; height: 300px; background-color: white;">
+        <textarea v-model="textoOriginal" style="width: 100%; padding: 15px; height: 85%; border: 0"></textarea>
+        <div style="width: 100%; height: 15%; display: flex; justify-content: space-around;">
+            <button> <i class="fa fa-upload"></i>  Upload</button>
+            <button><i class="fa fa-trash"></i>   Limpar</button>
+            <button><i class="fa fa-microphone"></i>   Gravar</button>
+        </div>
+      </div>
+      <div style="border:rgb(143, 143, 143) solid 1px; width: 500px; border-radius: 15px ; height: 300px; background-color: white;">
+        <textarea v-model="textoResumido" style="width: 100%; padding: 15px; height: 85%; border: 0"></textarea>
+        <div style="width: 100%; height: 15%; display: flex; justify-content: space-around;">
+            <button><i class="fa fa-download"></i>  Download</button>
+            <button><i class="fa fa-copy"></i>  Copiar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        textoOriginal: 'Texto Original',
+        textoResumido: 'Texto Resumido'
+      },
+    });
+  </script>
+</body>
+</html>
