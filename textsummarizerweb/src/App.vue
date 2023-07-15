@@ -36,13 +36,12 @@ export default {
       this.textoResumido = this.integraAPI(this.textoOriginal);
     },
     integraAPI(text){
-      this.$httppost('https://wwww.localhost:5000/PostText', {
-        role: "user",
-        text: text
-
-      }).then(res => {
+      this.$http.post('https://localhost:7273/Chat?role=asdf&content=' + text).then(res => {
         this.textoResumido = res
-
+      })
+      .catch(e => 
+      {
+        console.log(e)
       })
     }
   },
