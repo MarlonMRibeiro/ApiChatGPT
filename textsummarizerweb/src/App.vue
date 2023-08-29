@@ -2,18 +2,18 @@
   <div class="fundo-azul"></div>
   <div class="field-text-area">
     <div class="card-text-area">
-      <Textarea placeholder="Texto" @input="atualizarTexto" v-model="textoOriginal"></Textarea>
+      <Textarea placeholder="Texto" @input="atualizarTexto" v-model="textoOriginal" v-bind:value="textoOriginal"></Textarea>
       <div class="bottom-text-area">
           <Button label="Upload" icon="fas fa-upload" :loading="loading" @click="load" plain text />
-          <Button label="Limpar" icon="fas fa-trash" :loading="loading" @click="load" plain text />
+          <Button label="Limpar" icon="fas fa-trash" :loading="loading" @click="limpar" plain text />
           <Button label="Gravar" icon="fas fa-microphone" :loading="loading" @click="load" plain text />
       </div>
     </div>
     <div class="card-text-area">
-      <Textarea v-model="textoResumido" v-bind:value="textoResumido"> </Textarea>
+      <Textarea v-model="textoResumido" :readonly="true" v-bind:value="textoResumido" id="textarea"> </Textarea>
       <div style="width: 100%; height: 15%; display: flex; justify-content: space-around;">
         <Button label="Download" icon="fas fa-download" :loading="loading" @click="load" plain text />
-        <Button label="Copiar" icon="fas fa-copy" :loading="loading" @click="load" plain text />
+        <Button label="Copiar" icon="fas fa-copy" :loading="loading" @click="copiarTexto" plain text />
       </div>
     </div>
   </div>
@@ -26,8 +26,9 @@ export default {
   name: 'App',
   data() {
     return {
-      textoOriginal: "asdasfsdfsadf",
-      textoResumido: ""
+      textoOriginal: "a",
+      textoResumido: "dfsgdsfgdsfg",
+      asdasd: null
     }
   },
   methods: {
@@ -43,6 +44,12 @@ export default {
       {
         console.log(e)
       })
+    },
+    limpar(){
+      this.textoOriginal = "";
+    },
+    copiarTexto() {
+        navigator.clipboard.writeText(this.textoResumido);
     }
   },
   components: {

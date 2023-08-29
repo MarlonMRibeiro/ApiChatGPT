@@ -15,5 +15,4 @@ const app = createApp(App);
 
 app.use(PrimeVue);
 app.config.globalProperties.$http = axios;
-
 app.mount('#app');
