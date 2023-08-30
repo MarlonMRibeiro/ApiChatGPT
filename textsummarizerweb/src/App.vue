@@ -6,7 +6,7 @@
       <div class="bottom-text-area">
           <Button label="Upload" icon="fas fa-upload" :loading="loading" @click="load" plain text />
           <Button label="Limpar" icon="fas fa-trash" :loading="loading" @click="limpar" plain text />
-          <Button label="Gravar" icon="fas fa-microphone" :loading="loading" @click="load" plain text />
+          <Button class="btn-microphone" label="Gravar" icon="fas fa-microphone" :loading="loading" @click="clickMicrofone" plain text />
       </div>
     </div>
     <div class="card-text-area">
@@ -28,8 +28,12 @@ export default {
     return {
       textoOriginal: "a",
       textoResumido: "dfsgdsfgdsfg",
-      asdasd: null
+      recognition: null,
+      listening: false
     }
+  },
+  mounted: function() {
+    this.recognition = this.createRecognition();
   },
   methods: {
     atualizarTexto(event) {
@@ -50,6 +54,36 @@ export default {
     },
     copiarTexto() {
         navigator.clipboard.writeText(this.textoResumido);
+    },
+    createRecognition(){
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = SpeechRecognition !== undefined ? new SpeechRecognition() : null;
+
+      if(!recognition){
+        return
+      }
+
+      recognition.lang = "pt_BR";
+      recognition.continuous = true;
+
+      recognition.onstart = () => { 
+        this.listening = true;
+        document.getElementsByClassName("btn-microphone")[0].children[0].classList.add("send");
+      };
+
+      recognition.onend = () => { 
+        this.listening = false;
+        document.getElementsByClassName("btn-microphone")[0].children[0].classList.remove("send");
+      };
+      recognition.onerror = e => console.log("error", e);
+      recognition.onresult = e => this.textoOriginal = e.results[0][0].transcript;
+      return recognition;
+    },
+    clickMicrofone(){
+      if(!this.recognition) return;
+
+      this.listening ? this.recognition.stop() : this.recognition.start();
+
     }
   },
   components: {
@@ -128,4 +162,28 @@ textarea {
   display: flex; 
   justify-content: space-around;
 }
+
+/* TESTEeeeeeeeeeeeeeeeeeeeeeee */
+
+.send {
+  border-radius: 70px;
+  box-shadow: 0 0 0 0 rgba(69, 152, 27, 0.5);
+  cursor: pointer;
+  outline: none;
+  padding: 1px 1px;
+  transition: background, padding 1ms ease-in-out;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(.2);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 12px rgba(69, 152, 27, 0);
+  }
+}
+
 </style>
